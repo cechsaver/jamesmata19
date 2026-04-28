@@ -1,0 +1,145 @@
+            <div class="grid grid-nogutter">
+              <!-- STR -->
+              <div class="col-12 grid grid-nogutter">
+                <div class="col-6">
+                  <app-status-input
+                    label="Str"
+                    [dropdownList]="mainStatusList"
+                    [(value)]="model.str"
+                    (valueChange)="statusChange.emit()"
+                    [extraValue]="(model.jobStr || 0) + (totalSummary?.str || 0)"
+                  ></app-status-input>
+                </div>
+                <div class="col-6">
+                  <app-status-input
+                    label="Pow"
+                    [disabled]="!isAllowTraitStat"
+                    [dropdownList]="traitStatusList"
+                    [(value)]="model.pow"
+                    (valueChange)="statusChange.emit()"
+                    [extraValue]="(model.jobPow || 0) + (totalSummary?.pow || 0)"
+                    badgeSeverity="danger"
+                  ></app-status-input>
+                </div>
+              </div>
+
+              <!-- AGI -->
+              <div class="col-12 grid grid-nogutter">
+                <div class="col-6">
+                  <app-status-input
+                    label="Agi"
+                    [dropdownList]="mainStatusList"
+                    [(value)]="model.agi"
+                    (valueChange)="statusChange.emit()"
+                    [extraValue]="(model.jobAgi || 0) + (totalSummary?.agi || 0)"
+                  ></app-status-input>
+                </div>
+                <div class="col-6">
+                  <app-status-input
+                    label="Sta"
+                    [disabled]="!isAllowTraitStat"
+                    [dropdownList]="traitStatusList"
+                    [(value)]="model.sta"
+                    (valueChange)="statusChange.emit()"
+                    [extraValue]="(model.jobSta || 0) + (totalSummary?.sta || 0)"
+                    badgeSeverity="danger"
+                  ></app-status-input>
+                </div>
+              </div>
+
+              <!-- VIT -->
+              <div class="col-12 grid grid-nogutter">
+                <div class="col-6">
+                  <app-status-input
+                    label="Vit"
+                    [dropdownList]="mainStatusList"
+                    [(value)]="model.vit"
+                    (valueChange)="statusChange.emit()"
+                    [extraValue]="(model.jobVit || 0) + (totalSummary?.vit || 0)"
+                  ></app-status-input>
+                </div>
+                <div class="col-6">
+                  <app-status-input
+                    label="Wis"
+                    [disabled]="!isAllowTraitStat"
+                    [dropdownList]="traitStatusList"
+                    [(value)]="model.wis"
+                    (valueChange)="statusChange.emit()"
+                    [extraValue]="(model.jobWis || 0) + (totalSummary?.wis || 0)"
+                    badgeSeverity="danger"
+                  ></app-status-input>
+                </div>
+              </div>
+
+              <!-- INT -->
+              <div class="col-12 grid grid-nogutter">
+                <div class="col-6">
+                  <app-status-input
+                    label="Int"
+                    [dropdownList]="mainStatusList"
+                    [(value)]="model.int"
+                    (valueChange)="statusChange.emit()"
+                    [extraValue]="(model.jobInt || 0) + (totalSummary?.int || 0)"
+                  ></app-status-input>
+                </div>
+                <div class="col-6">
+                  <app-status-input
+                    label="Spl"
+                    [disabled]="!isAllowTraitStat"
+                    [dropdownList]="traitStatusList"
+                    [(value)]="model.spl"
+                    (valueChange)="statusChange.emit()"
+                    [extraValue]="(model.jobSpl || 0) + (totalSummary?.spl || 0)"
+                    badgeSeverity="danger"
+                  ></app-status-input>
+                </div>
+              </div>
+
+              <!-- DEX -->
+              <div class="col-12 grid grid-nogutter">
+                <div class="col-6">
+                  <app-status-input
+                    label="Dex"
+                    [dropdownList]="mainStatusList"
+                    [(value)]="model.dex"
+                    (valueChange)="statusChange.emit()"
+                    [extraValue]="(model.jobDex || 0) + (totalSummary?.dex || 0)"
+                  ></app-status-input>
+                </div>
+                <div class="col-6">
+                  <app-status-input
+                    label="Con"
+                    [disabled]="!isAllowTraitStat"
+                    [dropdownList]="traitStatusList"
+                    [(value)]="model.con"
+                    (valueChange)="statusChange.emit()"
+                    [extraValue]="(model.jobCon || 0) + (totalSummary?.con || 0)"
+                    badgeSeverity="danger"
+                  ></app-status-input>
+                </div>
+              </div>
+
+              <!-- LUK -->
+              <div class="col-12 grid grid-nogutter">
+                <div class="col-6">
+                  <app-status-input
+                    label="Luk"
+                    [dropdownList]="mainStatusList"
+                    [(value)]="model.luk"
+                    (valueChange)="statusChange.emit()"
+                    [extraValue]="(model.jobLuk || 0) + (totalSummary?.luk || 0)"
+                  ></app-status-input>
+                </div>
+                <div class="col-6">
+                  <app-status-input
+                    label="Crt"
+                    [disabled]="!isAllowTraitStat"
+                    [dropdownList]="traitStatusList"
+                    [(value)]="model.crt"
+                    (valueChange)="statusChange.emit()"
+                    [extraValue]="(model.jobCrt || 0) + (totalSummary?.crt || 0)"
+                    badgeSeverity="danger"
+                  ></app-status-input>
+                </div>
+              </div>
+            </div>

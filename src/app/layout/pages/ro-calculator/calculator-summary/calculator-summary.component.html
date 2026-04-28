@@ -1,0 +1,125 @@
+  <div class="loading_block" *ngIf="isCalculating">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+  </div>
+  <div class="col-6">
+    <div class="grid grid-nogutter">
+      <div class="col-12">
+        Alt+Q Atk:
+        <span class="font-semibold px-1 summary_stat_atk">
+          {{ totalSummary?.calc?.totalStatusAtk || 0 }} +
+          {{
+            (totalSummary?.weapon?.baseWeaponAtk || 0) +
+              (totalSummary?.weapon?.refineBonus || 0) +
+              (totalSummary?.calc?.totalMasteryAtk || 0) +
+              (totalSummary?.calc?.totalEquipAtk || 0)
+          }}
+        </span>
+      </div>
+      <div [hidden]="isProduction" class="col-12">
+        Equip Atk:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.atk || 0 }} + {{ totalSummary?.atkPercent || 0 }} %</span>
+      </div>
+      <div class="col-6">
+        P.Atk:
+        <span class="font-semibold px-1 summary_stat_atk2">{{ totalSummary?.dmg?.pAtk || 0 }}</span>
+      </div>
+      <div class="col-6">
+        C.Rate:
+        <span class="font-semibold px-1 summary_stat_atk2">{{ totalSummary?.dmg?.cRate || 0 }}</span>
+      </div>
+      <div class="col-12">
+        ASPD:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.calc?.totalAspd || 0 }}</span>
+        <span class="font-semibold px-1 summary_highlight">( {{ totalSummary?.calc?.hitPerSecs || 0 }} Hits/s )</span>
+      </div>
+      <div class="col-12">
+        Hit:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.calc?.totalHit || 0 }}</span>
+        Perfect:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.calc?.totalPerfectHit || 0 }} %</span>
+      </div>
+      <div class="col-12">
+        CriRate:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.calc?.totalCri || 0 }} %</span>
+        Dmg: <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.criDmg || 0 }} %</span>
+      </div>
+      <div class="col-12">
+        Melee:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.melee || 0 }} %</span> Range:
+        <Span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.range || 0 }} %</Span>
+      </div>
+      <div class="col-12">
+        Def:
+        <span class="font-semibold px-1 summary_stat_def">{{ totalSummary?.calc?.softDef || 0 }} + {{ totalSummary?.calc?.def || 0 }}</span>
+        Res:
+        <span class="font-semibold px-1 summary_stat_def2">{{ totalSummary?.calc?.res || 0 }}</span>
+      </div>
+      <div class="col-12">
+        Mdef:
+        <span class="font-semibold px-1 summary_stat_def">{{ totalSummary?.calc?.softMdef || 0 }} + {{ totalSummary?.calc?.mdef || 0 }}</span>
+        MRes:
+        <span class="font-semibold px-1 summary_stat_def2">{{ totalSummary?.calc?.mres || 0 }}</span>
+      </div>
+      <div class="col-12">
+        Flee:
+        <span class="font-semibold px-1 summary_stat_def">{{ totalSummary?.calc?.totalFlee || 0 }} + {{ totalSummary?.calc?.totalPerfectDodge || 0 }}</span>
+        HitPhysical:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.hitDmg || 0 }} %</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="grid grid-nogutter mx-1">
+      <div class="col-12">
+        Alt+Q Matk:
+        <span class="font-semibold px-1 summary_stat_matk"
+          >{{ totalSummary?.calc?.totalStatusMatk || 0 }} +
+          {{
+            (totalSummary?.weapon?.baseWeaponMatk || 0) +
+              (totalSummary?.weapon?.refineBonus || 0) +
+              (totalSummary?.calc?.leftWeaponRefineBonus || 0) +
+              (totalSummary?.matk || 0)
+          }}</span
+        >
+      </div>
+      <div [hidden]="isProduction" class="col-12">
+        Equip Matk:
+        <span class="font-semibold px-1 summary_stat_matk">{{ totalSummary?.matk || 0 }} + {{ totalSummary?.matkPercent || 0 }} %</span>
+      </div>
+      <div class="col-12">
+        Matk
+        <span class="font-semibold px-1 summary_stat_matk">{{ totalSummary?.matkPercent || 0 }} %</span>
+        S.Matk:
+        <span class="font-semibold px-1 summary_stat_matk2">{{ totalSummary?.dmg?.sMatk || 0 }}</span>
+      </div>
+      <div class="col-12">
+        After Cast Delay:
+        <span class="font-semibold px-1 summary_stat_matk">{{ totalSummary?.acd || 0 }}</span>
+      </div>
+      <div class="col-12">
+        Fixed Cast Time:
+        <span class="font-semibold px-1 summary_stat_matk">{{ totalSummary?.fct || 0 }}</span>
+      </div>
+      <div class="col-12">
+        Variable Cast Time:
+        <span class="font-semibold px-1 summary_stat_matk">{{ totalSummary?.vct || 0 }}</span>
+      </div>
+      <div class="col-12">
+        Dex2 Int1:
+        <span class="font-semibold px-1 summary_stat_yellow">{{ totalSummary?.calc?.dex2int1 || 0 }}</span>
+        <span [hidden]="totalSummary?.calc?.to530 <= 0">{{ '( อีก ' + totalSummary?.calc?.to530 + ' )' }}</span>
+      </div>
+      <div class="col-12 px-1 border_default hp-sp-section" [hidden]="hideHpSp">
+        <div class="grid grid-nogutter">
+          <div class="col-12 flex gap-1">
+            HP:
+            <span class="font-semibold px-1 summary_stat_yellow">{{ totalSummary?.calc?.maxHp || 0 | number }}</span>
+          </div>
+          <div class="col-12 flex gap-1">
+            SP:
+            <span class="font-semibold px-1 summary_stat_yellow">{{ totalSummary?.calc?.maxSp || 0 | number }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

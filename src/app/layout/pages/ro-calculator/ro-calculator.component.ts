@@ -107,7 +107,6 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
   chanceListSignal = signal<ChanceModel[]>([]);
   isCalculatingSignal = signal<boolean>(false);
   
-  private worker: Worker;
   private isWorkerReady = false;
 
   loadBtnItems: MenuItem[];

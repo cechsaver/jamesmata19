@@ -253235,10 +253235,12 @@
     "defense": null,
     "weight": 0,
     "requiredLevel": 100,
-    "location": null,
+    "location": "Earring",
     "compositionPos": null,
     "canGrade": false,
-    "usableClass": [],
+    "usableClass": [
+      "all"
+    ],
     "script": {}
   },
   "1270225": {
@@ -253258,10 +253260,12 @@
     "defense": null,
     "weight": 0,
     "requiredLevel": 100,
-    "location": null,
+    "location": "Pendant",
     "compositionPos": null,
     "canGrade": false,
-    "usableClass": [],
+    "usableClass": [
+      "all"
+    ],
     "script": {}
   },
   "1270226": {
@@ -253281,10 +253285,12 @@
     "defense": null,
     "weight": 0,
     "requiredLevel": 100,
-    "location": null,
+    "location": "Earring",
     "compositionPos": null,
     "canGrade": false,
-    "usableClass": [],
+    "usableClass": [
+      "all"
+    ],
     "script": {}
   },
   "1270227": {
@@ -253304,10 +253310,12 @@
     "defense": null,
     "weight": 0,
     "requiredLevel": 100,
-    "location": null,
+    "location": "Pendant",
     "compositionPos": null,
     "canGrade": false,
-    "usableClass": [],
+    "usableClass": [
+      "all"
+    ],
     "script": {}
   },
   "1270228": {
@@ -253327,10 +253335,12 @@
     "defense": null,
     "weight": 0,
     "requiredLevel": 100,
-    "location": null,
+    "location": "Earring",
     "compositionPos": null,
     "canGrade": false,
-    "usableClass": [],
+    "usableClass": [
+      "all"
+    ],
     "script": {}
   },
   "1270229": {
@@ -253350,10 +253360,12 @@
     "defense": null,
     "weight": 0,
     "requiredLevel": 100,
-    "location": null,
+    "location": "Pendant",
     "compositionPos": null,
     "canGrade": false,
-    "usableClass": [],
+    "usableClass": [
+      "all"
+    ],
     "script": {}
   }
 }

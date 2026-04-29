@@ -64,12 +64,30 @@ def map_to_target(data: dict, server_id: int) -> dict:
         }
 
     # ===== server ปกติ =====
+    # ✅ Mapping location based on itemSubTypeId
+    sub_type_id = get_first(data, "itemSubTypeId", "itemSubType", "subType")
+    location_map = {
+        280: "Weapon",    # Shadow Weapon
+        512: "Headgear",  # Upper
+        513: "Armor",     # Armor
+        514: "Shield",    # Shield
+        515: "Garment",   # Garment
+        516: "Shoes",     # Boot
+        517: "Accessory", # Acc
+        526: "Armor",     # Shadow Armor
+        527: "Shield",    # Shadow Shield
+        528: "Shoes",     # Shadow Boot
+        529: "Earring",   # Shadow Earring
+        530: "Pendant",   # Shadow Pendant
+    }
+    location_val = location_map.get(sub_type_id)
+
     weight_val = get_first(data, "weight", "Weight")
     if weight_val is not None:
         try:
             weight_val = int(float(weight_val))
         except Exception:
-            weight_val = None
+            weight_val = 0
 
     return {
         "id": data.get("id"),
@@ -80,18 +98,18 @@ def map_to_target(data: dict, server_id: int) -> dict:
         "resName": get_first(data, "resName", "kROName", "krName", "resourceName"),
         "unidResName": get_first(data, "unidentifiedResourceName", "unidentifiedResName"),
         "description": desc,
-        "slots": get_first(data, "slots", "slotCount"),
+        "slots": get_first(data, "slots", "slotCount") or 0,
         "itemTypeId": get_first(data, "itemTypeId", "itemType", "type"),
-        "itemSubTypeId": get_first(data, "itemSubTypeId", "itemSubType", "subType"),
+        "itemSubTypeId": sub_type_id,
         "itemLevel": get_first(data, "itemLevel", "ItemLevel"),
         "attack": get_first(data, "attack", "atk", "ATK"),
         "defense": get_first(data, "defense", "def", "DEF"),
-        "weight": weight_val,
+        "weight": weight_val or 0,
         "requiredLevel": get_first(data, "requiredLevel", "reqLevel", "RequireLevel"),
-        "location": None,
+        "location": location_val,
         "compositionPos": None,
         "canGrade": False,
-        "usableClass": [],
+        "usableClass": ["all"],
         "script": {},
     }
 

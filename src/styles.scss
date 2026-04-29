@@ -23,76 +23,85 @@ $gutter: 1rem; //for primeflex grid system
   
   /* Compact Design Tokens */
   --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-blur: blur(12px);
-  --panel-gap: 0.75rem;
+  --glass-blur: blur(8px);
+  --panel-gap: 0.5rem; /* Shorter gap */
 }
 
 body {
   background: var(--bg-deep);
   background-image: radial-gradient(circle at 50% -20%, #1c2128 0%, #0a0c10 100%);
   color: var(--text-main);
-  font-size: 14px; /* Smaller base font for compactness */
+  font-size: 13px; /* Slightly smaller for density */
   overflow-x: hidden;
 }
 
 /* Dashboard Layout Utilities */
 .dashboard-container {
   display: grid;
-  grid-template-columns: 1fr 380px; /* Fixed width for summary */
+  grid-template-columns: 1fr 340px; /* Slimmer summary */
   gap: var(--panel-gap);
-  padding: 1rem;
-  max-width: 1600px;
-  margin: 0 auto;
+  padding: 0.75rem;
+  max-width: 100%;
 }
 
 .sticky-summary {
   position: sticky;
-  top: 1rem;
-  height: calc(100vh - 2rem);
-  overflow-y: auto;
+  top: 0.75rem;
+  height: calc(100vh - 1.5rem);
+  z-index: 10;
 }
 
 .compact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: var(--panel-gap);
+  align-content: start;
 }
 
 .glass-panel {
   background: var(--bg-card);
   backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  padding: 1rem; /* Reduced padding */
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-radius: 8px;
+  padding: 0.75rem; /* Tighter padding */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  overflow: visible !important; /* CRITICAL: Allow dropdowns to show outside */
+}
+
+/* Fix Dropdown z-index & clipping */
+.p-dropdown-panel, .p-multiselect-panel {
+  z-index: 9999 !important;
+  background: #1c2128 !important;
+  border: 1px solid var(--primary) !important;
 }
 
 /* Refined PrimeNG for Emerald Theme */
 .p-dropdown, .p-inputtext, .p-multiselect {
-  font-size: 0.9rem !important;
-  background: rgba(0, 0, 0, 0.2) !important;
+  font-size: 0.85rem !important;
+  background: rgba(0, 0, 0, 0.3) !important;
   border-color: var(--glass-border) !important;
-  padding: 0.4rem 0.6rem !important;
+  padding: 2px 4px !important; /* Much more compact inputs */
 }
 
-.p-dropdown:not(.p-disabled).p-focus {
-  border-color: var(--primary) !important;
-  box-shadow: 0 0 0 1px var(--primary-glow) !important;
-}
-
-.p-button.p-button-success {
-  background: var(--primary) !important;
-  color: #000 !important;
-  font-weight: 700 !important;
-  border: none !important;
+.p-inputgroup-addon {
+  padding: 0 8px !important;
+  font-size: 0.8rem !important;
+  min-width: 60px !important;
 }
 
 .p-accordion .p-accordion-header .p-accordion-header-link {
-  background: transparent !important;
-  border: none !important;
-  color: var(--primary) !important;
-  font-weight: 600 !important;
-  padding: 0.75rem 0 !important;
+  padding: 0.4rem 0 !important;
+  font-size: 0.9rem !important;
+}
+
+.grid {
+  margin-right: -0.25rem !important;
+  margin-left: -0.25rem !important;
+  margin-top: -0.25rem !important;
+}
+
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+  padding: 0.25rem !important; /* Reduce default PrimeFlex padding */
 }
 
 /* Responsive Overrides */

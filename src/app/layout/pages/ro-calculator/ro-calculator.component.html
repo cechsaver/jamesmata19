@@ -566,6 +566,13 @@
           [(enchant2Id)]="model2.headLowerEnchant1"
           [(enchant3Id)]="model2.headLowerEnchant2"
           [(enchant4Id)]="model2.headLowerEnchant3"
+          (selectItemChange)="onCompareItemChange()"
+          (gradeChange)="onCompareItemChange()"
+        ></app-equipment>
+      </div>
+    </div>
+    </div>
+
     <!-- Armor -->
     <div class="glass-panel">
       <div class="grid item_label_def">
@@ -1316,6 +1323,7 @@
           ></app-equipment-shadow>
         </div>
       </div>
+    </div>
     </div>
   </div>
 

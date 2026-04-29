@@ -22,11 +22,12 @@
   <app-elemental-table [monsterMap]="monsterDataMap" [groupMonsterList]="groupMonsterList" [allSelectedMonsterIds]="allSelectedMonsterIds"></app-elemental-table>
 </p-dialog>
 
-<div class="grid grid-nogutter" style="min-width: 1500px">
+<div class="grid p-4" style="min-width: 1500px; gap: 1.5rem;">
   <!-- Left Side -->
   <div class="p-fluid col-7">
     <!-- Create Update Class -->
-    <div class="grid grid-nogutter">
+    <div class="glass-panel">
+      <div class="grid">
       <div class="col-4">
         <div class="grid grid-nogutter">
           <div class="col-12">
@@ -215,9 +216,11 @@
         </div>
       </div>
     </div>
-
+    </div>
+    
     <!-- Weapon + Ammo -->
-    <div class="grid grid-nogutter item_label_weapon_main">
+    <div class="glass-panel">
+      <div class="grid item_label_weapon_main">
       <div class="col-12">
         <app-equipment
           [itemType]="'weapon'"
@@ -374,9 +377,11 @@
         ></app-equipment>
       </div>
     </div>
-
+    </div>
+ 
     <!-- Shield -->
-    <div class="grid grid-nogutter item_label_shield_main">
+    <div class="glass-panel">
+      <div class="grid item_label_shield_main">
       <div class="col-12" [hidden]="!model.weapon || hiddenMap.shield || !!model.leftWeapon">
         <app-equipment
           [itemType]="'shield'"
@@ -414,9 +419,11 @@
           (optionChange)="onCompareItemChange()" (gradeChange)="onCompareItemChange()"></app-equipment>
       </div>
     </div>
-
+    </div>
+ 
     <!-- Head Upper -->
-    <div class="grid grid-nogutter item_label_head">
+    <div class="glass-panel">
+      <div class="grid item_label_head">
       <div class="col-12">
         <app-equipment
           [itemType]="'headUpper'"
@@ -559,14 +566,9 @@
           [(enchant2Id)]="model2.headLowerEnchant1"
           [(enchant3Id)]="model2.headLowerEnchant2"
           [(enchant4Id)]="model2.headLowerEnchant3"
-          (selectItemChange)="onCompareItemChange()"
-          (gradeChange)="onCompareItemChange()"
-        ></app-equipment>
-      </div>
-    </div>
-
     <!-- Armor -->
-    <div class="grid grid-nogutter item_label_def">
+    <div class="glass-panel">
+      <div class="grid item_label_def">
       <div class="col-12">
         <app-equipment
           [itemType]="'armor'"
@@ -621,9 +623,11 @@
         ></app-equipment>
       </div>
     </div>
-
+    </div>
+ 
     <!-- Garment -->
-    <div class="grid grid-nogutter item_label_def">
+    <div class="glass-panel">
+      <div class="grid item_label_def">
       <div class="col-12">
         <app-equipment
           [itemType]="'garment'"
@@ -676,9 +680,11 @@
         ></app-equipment>
       </div>
     </div>
-
+    </div>
+ 
     <!-- Boot -->
-    <div class="grid grid-nogutter item_label_def">
+    <div class="glass-panel">
+      <div class="grid item_label_def">
       <div class="col-12">
         <app-equipment
           [itemType]="'boot'"
@@ -725,9 +731,11 @@
         ></app-equipment>
       </div>
     </div>
-
+    </div>
+ 
     <!-- Acc Right -->
-    <div class="grid grid-nogutter item_label_acc">
+    <div class="glass-panel">
+      <div class="grid item_label_acc">
       <div class="col-12">
         <app-equipment
           [itemType]="'accRight'"
@@ -781,9 +789,11 @@
         ></app-equipment>
       </div>
     </div>
-
+    </div>
+ 
     <!-- Acc Left -->
-    <div class="grid grid-nogutter item_label_acc">
+    <div class="glass-panel">
+      <div class="grid item_label_acc">
       <div class="col-12">
         <app-equipment
           [itemType]="'accLeft'"
@@ -835,9 +845,11 @@
         ></app-equipment>
       </div>
     </div>
-
+    </div>
+ 
     <!-- Pet / Costume -->
-    <div class="grid grid-nogutter mt-3">
+    <div class="glass-panel">
+      <div class="grid mt-3">
       <!-- Upper -->
       <div class="col-12 grid grid-nogutter item_label_costume">
         <div class="col-3">
@@ -1051,9 +1063,11 @@
         </div>
       </div>
     </div>
-
+    </div>
+ 
     <!-- Shadow -->
-    <div class="grid grid-nogutter mt-3">
+    <div class="glass-panel">
+      <div class="grid align-content-start">
       <div class="col-12 grid grid-nogutter align-content-start">
         <!-- Shadow Weapon -->
         <div class="col-12 item_label_shadow">
@@ -1307,7 +1321,8 @@
 
   <!-- Right Side -->
   <div class="p-fluid col-5">
-    <p-accordion [multiple]="true" [activeIndex]="[2, 7]">
+    <div class="glass-panel" style="height: calc(100vh - 3rem); overflow-y: auto;">
+      <p-accordion [multiple]="true" [activeIndex]="[2, 7]">
       <p-accordionTab header="Consumables" class="consumable">
         <div class="grid grid-nogutter">
           <!-- Consumable -->
@@ -1807,6 +1822,7 @@
           </div>
         </div>
       </p-accordionTab>
-    </p-accordion>
+      </p-accordion>
+    </div>
   </div>
 </div>

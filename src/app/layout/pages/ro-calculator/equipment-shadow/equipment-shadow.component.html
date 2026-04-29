@@ -14,6 +14,7 @@
           (onChange)="onSelectItem('itemId', $event.value)"
           (onClear)="onClearItem()"
           [placeholder]="placeholder"
+          [appendTo]="'body'"
         >
           <ng-template let-item pTemplate="selectedItem">
             <div class="flex gap-1 item_template" *ngIf="itemId">
@@ -31,7 +32,7 @@
       </div>
     </div>
     <div class="col-1 refine-list">
-      <p-dropdown [options]="refineList" [(ngModel)]="itemRefine" scrollHeight="350px" [disabled]="!itemId" (onChange)="onSelectItem('itemRefine', itemId, $event.value)">
+      <p-dropdown [options]="refineList" [(ngModel)]="itemRefine" scrollHeight="350px" [disabled]="!itemId" (onChange)="onSelectItem('itemRefine', itemId, $event.value)" [appendTo]="'body'">
         <ng-template let-item pTemplate="selectedItem">
           <div class="flex gap-1">
             <div>{{ item.label > 0 ? '+ ' : '' }} {{ item.label || 0 }}</div>
@@ -55,6 +56,7 @@
           [disabled]="enchant2List.length === 0 || !itemId"
           (onChange)="onSelectItem('enchant2Id', $event.value)"
           placeholder="Enchant 2"
+          [appendTo]="'body'"
         >
           <ng-template let-item pTemplate="selectedItem">
             <div class="flex gap-1 item_template" *ngIf="enchant2Id">
@@ -84,6 +86,7 @@
           [disabled]="enchant3List.length === 0 || !itemId"
           (onChange)="onSelectItem('enchant3Id', $event.value)"
           placeholder="Enchant 3"
+          [appendTo]="'body'"
         >
           <ng-template let-item pTemplate="selectedItem">
             <div class="flex gap-1 item_template" *ngIf="enchant3Id">
@@ -113,6 +116,7 @@
           [disabled]="enchant4List.length === 0 || !itemId"
           (onChange)="onSelectItem('enchant4Id', $event.value)"
           placeholder="Enchant 4"
+          [appendTo]="'body'"
         >
           <ng-template let-item pTemplate="selectedItem">
             <div class="flex gap-1 item_template" *ngIf="enchant4Id">
@@ -142,6 +146,7 @@
           [showClear]="true"
           (onChange)="onOptionChange($event)"
           (onClear)="onOptionChange($event)"
+          [appendTo]="'body'"
         ></p-cascadeSelect>
       </div>
     </div>

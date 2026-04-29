@@ -12,6 +12,7 @@
       (onChange)="onSelectItem('itemId', $event.value)"
       (onClear)="onClearItem()"
       [placeholder]="placeholder"
+      [appendTo]="'body'"
     >
       <ng-template let-item pTemplate="selectedItem">
         <div class="flex gap-1 item_template" *ngIf="itemId">

@@ -55,7 +55,8 @@
                 placeholder="Presets"
                 scrollHeight="350px"
                 [(ngModel)]="selectedPreset"
-               [virtualScroll]="true" [virtualScrollItemSize]="38">
+               [virtualScroll]="true" [virtualScrollItemSize]="38"
+               [appendTo]="'body'">
                 <ng-template let-job pTemplate="selectedItem">
                   <div class="flex gap-2 py-0 align-items-center" *ngIf="model.class">
                     <img src="assets/demo/images/jobs/icon_jobs_{{ job.icon }}.png" alt="" class="job_img" />
@@ -95,7 +96,8 @@
                 scrollHeight="350px"
                 [disabled]="isInProcessingPreset"
                 (onChange)="onClassChange()"
-               [virtualScroll]="true" [virtualScrollItemSize]="38">
+               [virtualScroll]="true" [virtualScrollItemSize]="38"
+               [appendTo]="'body'">
                 <ng-template let-job pTemplate="selectedItem">
                   <div class="flex gap-2 py-0 align-items-center" *ngIf="model.class">
                     <img src="assets/demo/images/jobs/icon_jobs_{{ job.icon }}.png" alt="" class="job_img" />
@@ -124,7 +126,8 @@
                 [resetFilterOnHide]="true"
                 [(ngModel)]="model.level"
                 (onChange)="onBaseStatusChange()"
-               [virtualScroll]="true" [virtualScrollItemSize]="38"></p-dropdown>
+               [virtualScroll]="true" [virtualScrollItemSize]="38"
+               [appendTo]="'body'"></p-dropdown>
             </div>
           </div>
           <div class="col-fixed">
@@ -150,7 +153,8 @@
                 [resetFilterOnHide]="true"
                 [(ngModel)]="model.jobLevel"
                 (onChange)="onJobLevelChange()"
-               [virtualScroll]="true" [virtualScrollItemSize]="38"></p-dropdown>
+               [virtualScroll]="true" [virtualScrollItemSize]="38"
+               [appendTo]="'body'"></p-dropdown>
             </div>
           </div>
           <div class="col-12">
@@ -209,6 +213,7 @@
                   [maxSelectedLabels]="6"
                   (onChange)="onListItemComparingChange()"
                   (onClear)="onListItemComparingChange(true)"
+                  [appendTo]="'body'"
                 ></p-multiSelect>
               </div>
             </div>
@@ -258,6 +263,7 @@
               placeholder="เคลือบ"
               scrollHeight="300px"
               (onChange)="onPropertyAtkChange()"
+              [appendTo]="'body'"
             >
               <ng-template let-item pTemplate="selectedItem">
                 <div class="flex gap-1" *ngIf="model.propertyAtk">
@@ -291,7 +297,8 @@
               (onChange)="onSelectItem('ammo', $event.value)"
               placeholder="Ammo"
               [disabled]="!model.weapon"
-             [virtualScroll]="true" [virtualScrollItemSize]="38">
+             [virtualScroll]="true" [virtualScrollItemSize]="38"
+             [appendTo]="'body'">
               <ng-template let-item pTemplate="selectedItem">
                 <div class="flex gap-1 item_template" *ngIf="model.ammo">
                   <img src="assets/demo/images/items/{{ item.value }}.png" alt="" class="item_img" />
@@ -898,6 +905,7 @@
             [showClear]="true"
             (onChange)="onSelectItem('pet', $event.value)"
             placeholder="Pet"
+            [appendTo]="'body'"
           >
             <ng-template let-item pTemplate="selectedItem">
               <div class="flex gap-1 item_template" *ngIf="model.pet">
@@ -1413,6 +1421,7 @@
                         (onChange)="onSkillClassChange()"
                         styleClass="'width: 50%'"
                         scrollHeight="380px"
+                        [appendTo]="'body'"
                       ></p-dropdown>
                     </div>
                   </div>
@@ -1449,6 +1458,7 @@
                         (onChange)="onSkillClassChange()"
                         styleClass="'width: 50%'"
                         scrollHeight="380px"
+                        [appendTo]="'body'"
                       ></p-dropdown>
                     </div>
                   </div>
@@ -1485,6 +1495,7 @@
                         (onChange)="onSkillClassChange()"
                         styleClass="'width: 50%'"
                         scrollHeight="380px"
+                        [appendTo]="'body'"
                       ></p-dropdown>
                     </div>
                   </div>
@@ -1558,6 +1569,7 @@
                     scrollHeight="400px"
                     [(ngModel)]="selectedMonster"
                     (onChange)="onMonsterChange()"
+                    [appendTo]="'body'"
                   >
                     <ng-template let-group pTemplate="group">
                       <div class="flex align-items-center font-bold dropdown_monster_group_label">
@@ -1586,6 +1598,7 @@
                         [(ngModel)]="model.hpStars"
                         (onChange)="onhpStarsChange()"
                         [style]="{ width: '100%' }"
+                        [appendTo]="'body'"
                       ></p-dropdown>
                     </div>
                   </div>
@@ -1599,6 +1612,7 @@
                         [(ngModel)]="model.defStars"
                         (onChange)="ondefStarsChange()"
                         [style]="{ width: '100%' }"
+                        [appendTo]="'body'"
                       ></p-dropdown>
                     </div>
                   </div>
@@ -1633,6 +1647,7 @@
                     scrollHeight="400px"
                     [(ngModel)]="model.selectedAtkSkill"
                     (onChange)="onAtkSkillChange()"
+                    [appendTo]="'body'"
                   ></p-dropdown>
                 </div>
               </div>
@@ -1649,6 +1664,7 @@
                     [optionGroupChildren]="['levelList']"
                     placeholder="-"
                     (onChange)="onAtkSkillChange()"
+                    [appendTo]="'body'"
                   ></p-cascadeSelect>
                 </div>
               </div>
@@ -1697,6 +1713,7 @@
                       [maxSelectedLabels]="2"
                       (onChange)="onMonsterListChange()"
                       (onClear)="onMonsterListChange()"
+                      [appendTo]="'body'"
                     >
                       <ng-template let-group pTemplate="group">
                         <div class="flex align-items-center font-bold dropdown_monster_group_label">
@@ -1715,6 +1732,7 @@
                       [maxSelectedLabels]="5"
                       (onChange)="onSelectedColChange()"
                       (onClear)="onSelectedColChange()"
+                      [appendTo]="'body'"
                     ></p-multiSelect>
                   </div>
                 </div>

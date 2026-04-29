@@ -139,82 +139,69 @@
 
 .battle_row_health {
   color: var(--red-300);
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: var(--bg-surface);
   font-weight: 400;
 }
 
 .summary_stat_atk {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--orange-300);
 }
 .summary_stat_atk2 {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--orange-200);
 }
 
 .summary_stat_matk {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--blue-300);
 }
 .summary_stat_matk2 {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--blue-200);
 }
 
 .summary_stat_yellow {
-  background-color: #121212;
+  background-color: transparent;
   color: var(--yellow-300);
 }
 
 .summary_stat_def {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--purple-200);
 }
 .summary_stat_def2 {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--purple-100);
 }
 
 .summary_value {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--blue-300);
 }
 
 .summary_damage {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--teal-300);
 }
 
 .summary_chance {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--teal-100);
 }
 
 .summary_chance_hilight {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--orange-300);
 }
 
 .summary_compare {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--yellow-200);
 }
 
 .summary_highlight {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--orange-400);
 }
 
@@ -245,19 +232,18 @@
 }
 
 .summary_monster_value {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--red-300);
 }
 
 .monster_hilight_label {
-  background-color: #121212;
+  background-color: transparent;
   color: var(--red-500);
   width: 75px;
 }
 
 .skill_hilight_label {
-  background-color: #121212;
+  background-color: transparent;
   color: var(--yellow-500);
   width: 60px;
 }
@@ -294,8 +280,7 @@
 :host ::ng-deep .item_label_weaponEnchant1,
 :host ::ng-deep .item_label_weaponEnchant2,
 :host ::ng-deep .item_label_weaponEnchant3 {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--pink-200);
 }
 
@@ -468,8 +453,7 @@
 :host ::ng-deep .item_label_shadowPendantEnchant1,
 :host ::ng-deep .item_label_shadowPendantEnchant2,
 :host ::ng-deep .item_label_shadowPendantEnchant3 {
-  /* background-color: var(--surface-0); */
-  background-color: #121212;
+  background-color: transparent;
   color: var(--green-200);
 }
 

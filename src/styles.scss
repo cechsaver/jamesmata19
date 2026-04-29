@@ -24,7 +24,7 @@ $gutter: 1rem; //for primeflex grid system
   /* Compact Design Tokens */
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-blur: blur(8px);
-  --panel-gap: 0.5rem; /* Shorter gap */
+  --panel-gap: 0.35rem; /* Shorter gap for better density */
 }
 
 body {
@@ -40,14 +40,14 @@ body {
   display: grid;
   grid-template-columns: 1fr 340px; /* Slimmer summary */
   gap: var(--panel-gap);
-  padding: 0.75rem;
+  padding: 0.5rem; /* Reduced padding */
   max-width: 100%;
 }
 
 .sticky-summary {
   position: sticky;
-  top: 0.75rem;
-  height: calc(100vh - 1.5rem);
+  top: 0.5rem;
+  height: calc(100vh - 1rem);
   z-index: 10;
 }
 
@@ -62,46 +62,50 @@ body {
   background: var(--bg-card);
   backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
-  border-radius: 8px;
-  padding: 0.75rem; /* Tighter padding */
+  border-radius: 6px; /* Slightly sharper corners for modern feel */
+  padding: 0.6rem; /* Tighter padding */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  overflow: visible !important; /* CRITICAL: Allow dropdowns to show outside */
+  overflow: visible !important; /* CRITICAL: Allow dropdowns to show outside if not appended to body */
 }
 
 /* Fix Dropdown z-index & clipping */
-.p-dropdown-panel, .p-multiselect-panel {
-  z-index: 9999 !important;
+.p-dropdown-panel, .p-multiselect-panel, .p-cascadeselect-panel {
+  z-index: 99999 !important; /* Extremely high to stay on top */
   background: #1c2128 !important;
   border: 1px solid var(--primary) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Refined PrimeNG for Emerald Theme */
-.p-dropdown, .p-inputtext, .p-multiselect {
-  font-size: 0.85rem !important;
-  background: rgba(0, 0, 0, 0.3) !important;
+.p-dropdown, .p-inputtext, .p-multiselect, .p-cascadeselect {
+  font-size: 0.82rem !important;
+  background: rgba(0, 0, 0, 0.4) !important;
   border-color: var(--glass-border) !important;
-  padding: 2px 4px !important; /* Much more compact inputs */
+  padding: 1px 3px !important; /* Much more compact inputs */
 }
 
 .p-inputgroup-addon {
-  padding: 0 8px !important;
-  font-size: 0.8rem !important;
-  min-width: 60px !important;
+  padding: 0 6px !important;
+  font-size: 0.78rem !important;
+  min-width: 50px !important;
+  background: rgba(45, 212, 191, 0.1) !important; /* Subtle emerald tint */
+  border-color: var(--glass-border) !important;
+  color: var(--primary) !important;
 }
 
 .p-accordion .p-accordion-header .p-accordion-header-link {
-  padding: 0.4rem 0 !important;
-  font-size: 0.9rem !important;
+  padding: 0.35rem 0.5rem !important;
+  font-size: 0.85rem !important;
 }
 
 .grid {
-  margin-right: -0.25rem !important;
-  margin-left: -0.25rem !important;
-  margin-top: -0.25rem !important;
+  margin-right: -0.2rem !important;
+  margin-left: -0.2rem !important;
+  margin-top: -0.2rem !important;
 }
 
 .col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
-  padding: 0.25rem !important; /* Reduce default PrimeFlex padding */
+  padding: 0.2rem !important; /* Reduce default PrimeFlex padding further */
 }
 
 /* Responsive Overrides */

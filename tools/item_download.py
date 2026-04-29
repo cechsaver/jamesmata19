@@ -62,10 +62,14 @@ def download_items(ids, folder="items_download"):
 
 
 if __name__ == "__main__":
-    user_input = input("give itemid or range ex. 313386 or 313387-313380: ")
+    # Support command line arguments for automation (GitHub Actions)
+    if len(sys.argv) > 1:
+        user_input = sys.argv[1]
+    else:
+        user_input = input("give itemid or range ex. 313386 or 313387-313380: ")
+        
     try:
         ids = parse_input(user_input)
     except ValueError as e:
         print(f"✘ ข้อผิดพลาด: {e}")
-        #raise SystemExit(1)
     download_items(ids)

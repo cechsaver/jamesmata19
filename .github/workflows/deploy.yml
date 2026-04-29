@@ -3,7 +3,7 @@ name: Deploy Angular to GitHub Pages
 on:
   push:
     branches:
-      - main # หาก branch ของคุณชื่อ master ให้แก้ตรงนี้เป็น master ครับ
+      - main # ตรวจสอบว่า branch หลักของคุณชื่อ main หรือ master นะครับ
 
 permissions:
   contents: read
@@ -28,9 +28,10 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm install # ใช้ install เพื่อความชัวร์ในกรณีที่ไม่มีไฟล์ lock
 
       - name: Build Angular Project
+        # แก้ไข base-href ให้ตรงกับชื่อ repo jamesmata19
         run: npx ng build --configuration production --base-href /jamesmata19/
 
       - name: Copy index.html to 404.html

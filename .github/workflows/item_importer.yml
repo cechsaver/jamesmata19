@@ -1,1 +1,62 @@
+name: Divine Pride Item Importer
+
+on:
+  workflow_dispatch:
+    inputs:
+      item_ids:
+        description: 'Item ID or Range (e.g., 460012 or 460012-460015)'
+        required: true
+        default: ''
+      server_id:
+        description: 'Server ID (1=iRO, 2=thROG, 5=thRO Desc Only)'
+        required: true
+        default: '2'
+      download_images:
+        description: 'Download images too?'
+        type: boolean
+        default: true
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run Item Parser
+        run: |
+          python tools/item_parser.py "${{ inputs.item_ids }}" "${{ inputs.server_id }}"
+
+      - name: Run Image Downloader
+        if: ${{ inputs.download_images }}
+        run: |
+          python tools/item_download.py "${{ inputs.item_ids }}"
+
+      - name: Move Images to Assets
+        if: ${{ inputs.download_images }}
+        run: |
+          mkdir -p src/assets/demo/images/items/
+          if [ -d "items_download" ]; then
+            cp -rn items_download/*.png src/assets/demo/images/items/ || true
+          fi
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add item_output.json src/assets/demo/images/items/
+          git commit -m "Imported items: ${{ inputs.item_ids }}" || echo "No changes to commit"
+          git push
 

@@ -9,26 +9,35 @@ $gutter: 1rem; //for primeflex grid system
 @import "../node_modules/primeicons/primeicons.css";
 
 :root {
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-blur: blur(12px);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  --primary-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  --surface-gradient: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Midnight Minimal Palette */
+  --bg-deep: #020617;
+  --bg-surface: #0f172a;
+  --primary: #22d3ee; /* Soft Cyan */
+  --primary-glow: rgba(34, 211, 238, 0.3);
+  
+  /* Refined Glass Effects */
+  --glass-bg: rgba(15, 23, 42, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-blur: blur(16px);
+  --glass-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.5);
+  
+  --surface-gradient: radial-gradient(circle at top left, #1e293b 0%, #020617 100%);
 }
 
 * {
   font-family: var(--font-family);
-  transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--surface-gradient);
+  background: var(--bg-deep);
+  background-image: var(--surface-gradient);
   background-attachment: fixed;
-  min-height: 100vh;
+  color: #e2e8f0;
+  -webkit-font-smoothing: antialiased;
   margin: 0;
-  color: #f1f5f9;
 }
 
 .glass-panel {
@@ -36,66 +45,65 @@ body {
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  border-radius: 20px;
   box-shadow: var(--glass-shadow);
   padding: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-/* PrimeNG Overrides */
-.p-dropdown, .p-inputtext, .p-multiselect, .p-splitbutton, .p-button {
-  border-radius: 12px !important;
-}
-
-.p-dropdown, .p-multiselect {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   
-  &:not(.p-disabled).p-focus {
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
-    border-color: #10b981 !important;
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.1);
   }
+}
+
+/* Minimal PrimeNG Overrides */
+.p-dropdown, .p-inputtext, .p-multiselect, .p-splitbutton, .p-button {
+  border-radius: 10px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+.p-dropdown:not(.p-disabled).p-focus, .p-inputtext:enabled:focus {
+  box-shadow: 0 0 0 1px var(--primary-glow) !important;
+  border-color: var(--primary) !important;
 }
 
 .p-button {
-  font-weight: 600 !important;
-  letter-spacing: 0.02em;
+  border: none !important;
+  transition: all 0.2s ease;
   
   &.p-button-success {
-    background: var(--primary-gradient) !important;
-    border: none !important;
+    background: var(--primary) !important;
+    color: var(--bg-deep) !important;
+    &:hover { background: #67e8f9 !important; }
   }
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
-  }
-}
-
-.p-dialog {
-  border-radius: 20px !important;
-  overflow: hidden;
-  background: rgba(30, 41, 59, 0.95) !important;
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-/* Specific UI enhancements */
-.job_img, .item_img {
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-  transition: transform 0.2s ease-in-out;
   
-  &:hover {
-    transform: scale(1.1);
+  &.p-button-warning {
+    background: #f59e0b !important;
+    color: #fff !important;
   }
 }
 
-.property_Water { background-color: var(--blue-600) !important; color: white !important; border-radius: 4px; padding: 2px 6px; }
-.property_Earth { background-color: var(--orange-200) !important; color: black !important; border-radius: 4px; padding: 2px 6px; }
-.property_Fire { background-color: var(--red-600) !important; color: white !important; border-radius: 4px; padding: 2px 6px; }
-.property_Wind { background-color: var(--green-400) !important; color: black !important; border-radius: 4px; padding: 2px 6px; }
-.property_Poison { background-color: #4bfe78 !important; color: black !important; border-radius: 4px; padding: 2px 6px; }
-.property_Holy { background-color: var(--yellow-300) !important; color: black !important; border-radius: 4px; padding: 2px 6px; }
-.property_Dark { background-color: #a55feb !important; color: white !important; border-radius: 4px; padding: 2px 6px; }
-.property_Ghost { background-color: #aaaaaa !important; color: black !important; border-radius: 4px; padding: 2px 6px; }
-.property_Undead { background-color: black !important; color: white !important; border-radius: 4px; padding: 2px 6px; }
+/* Clean Property Tags */
+[class^="property_"] {
+  border-radius: 6px;
+  padding: 1px 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.property_Water { background: #3b82f6 !important; color: #fff !important; }
+.property_Earth { background: #92400e !important; color: #fff !important; }
+.property_Fire { background: #ef4444 !important; color: #fff !important; }
+.property_Wind { background: #10b981 !important; color: #fff !important; }
+.property_Poison { background: #a855f7 !important; color: #fff !important; }
+.property_Holy { background: #eab308 !important; color: #000 !important; }
+.property_Dark { background: #6366f1 !important; color: #fff !important; }
+.property_Ghost { background: #94a3b8 !important; color: #fff !important; }
+.property_Undead { background: #1e293b !important; color: #fff !important; }
+
+/* Scrollbar refinement */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }

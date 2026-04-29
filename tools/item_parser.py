@@ -4,8 +4,9 @@
 import json
 import time
 import requests
+import sys
 
-API_KEY = ""
+API_KEY = "aeca7c137a6f12a654fbded316ad4792"
 OUTPUT_FILE = "item_output.json"
 REQUEST_DELAY_SEC = 0.2
 
@@ -142,6 +143,33 @@ def run_once():
 
 
 def main():
+    # Support command line arguments for automation (GitHub Actions)
+    if len(sys.argv) > 1:
+        item_input = sys.argv[1]
+        server_id = int(sys.argv[2]) if len(sys.argv) > 2 else 2 # Default to thROG
+        
+        item_ids = parse_item_ids(item_input)
+        print(f"=== Divine Pride Item Fetcher (Auto Mode) ===")
+        print(f"Target IDs: {item_ids}")
+        print(f"Server ID: {server_id} ({SERVER_MAP.get(server_id, 'Unknown')})")
+        
+        items = {}
+        with requests.Session() as session:
+            for i, item_id in enumerate(item_ids, 1):
+                try:
+                    data = fetch_item(item_id, server_id, session)
+                    items[str(item_id)] = map_to_target(data, server_id)
+                    print(f"[OK] {item_id}")
+                except Exception as e:
+                    print(f"[WARN] {item_id}: {e}")
+                if i < len(item_ids):
+                    time.sleep(REQUEST_DELAY_SEC)
+        
+        with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+            json.dump(items, f, ensure_ascii=False, indent=2)
+        print(f"Saved to {OUTPUT_FILE}")
+        return
+
     print("=== Divine Pride Item Fetcher ===")
     while True:
         try:

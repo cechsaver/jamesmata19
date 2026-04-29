@@ -1,14 +1,12 @@
-<div class="grid grid-nogutter summary-container">
+<div class="grid grid-nogutter">
   <div class="loading_block" *ngIf="isCalculating">
     <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
   </div>
-  
-  <!-- Physical Stats -->
-  <div class="col-12 border-bottom-dashed pb-1">
+  <div class="col-6">
     <div class="grid grid-nogutter">
-      <div class="col-12 mb-1">
-        <span class="label">Atk:</span>
-        <span class="value summary_stat_atk font-bold ml-1">
+      <div class="col-12 text_ellips_no_height">
+        Alt+Q Atk:
+        <span class="font-semibold px-1 summary_stat_atk">
           {{ totalSummary?.calc?.totalStatusAtk || 0 }} +
           {{
             (totalSummary?.weapon?.baseWeaponAtk || 0) +
@@ -18,46 +16,104 @@
           }}
         </span>
       </div>
-      <div class="col-6"><span class="label">P.Atk:</span> <span class="value summary_stat_atk2">{{ totalSummary?.dmg?.pAtk || 0 }}</span></div>
-      <div class="col-6"><span class="label">C.Rate:</span> <span class="value summary_stat_atk2">{{ totalSummary?.dmg?.cRate || 0 }}</span></div>
-      <div class="col-12"><span class="label">ASPD:</span> <span class="value summary_stat_atk">{{ totalSummary?.calc?.totalAspd || 0 }}</span> <span class="summary_highlight text-xs">({{ totalSummary?.calc?.hitPerSecs || 0 }} H/s)</span></div>
-      <div class="col-12"><span class="label">CriRate:</span> <span class="value summary_stat_atk">{{ totalSummary?.calc?.totalCri || 0 }}%</span> <span class="label ml-2">Dmg:</span> <span class="value summary_stat_atk">{{ totalSummary?.criDmg || 0 }}%</span></div>
+      <div class="col-6">
+        P.Atk:
+        <span class="font-semibold px-1 summary_stat_atk2">{{ totalSummary?.dmg?.pAtk || 0 }}</span>
+      </div>
+      <div class="col-6">
+        C.Rate:
+        <span class="font-semibold px-1 summary_stat_atk2">{{ totalSummary?.dmg?.cRate || 0 }}</span>
+      </div>
+      <div class="col-12 text_ellips_no_height">
+        ASPD:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.calc?.totalAspd || 0 }}</span>
+        <span class="font-semibold px-1 summary_highlight">( {{ totalSummary?.calc?.hitPerSecs || 0 }} Hits/s )</span>
+      </div>
+      <div class="col-12 text_ellips_no_height">
+        Hit:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.calc?.totalHit || 0 }}</span>
+        Perfect:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.calc?.totalPerfectHit || 0 }} %</span>
+      </div>
+      <div class="col-12 text_ellips_no_height">
+        CriRate:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.calc?.totalCri || 0 }} %</span>
+        Dmg: <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.criDmg || 0 }} %</span>
+      </div>
+      <div class="col-12 text_ellips_no_height">
+        Melee:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.melee || 0 }} %</span> Range:
+        <Span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.range || 0 }} %</Span>
+      </div>
+      <div class="col-12 text_ellips_no_height">
+        Def:
+        <span class="font-semibold px-1 summary_stat_def">{{ totalSummary?.calc?.softDef || 0 }} + {{ totalSummary?.calc?.def || 0 }}</span>
+        Res:
+        <span class="font-semibold px-1 summary_stat_def2">{{ totalSummary?.calc?.res || 0 }}</span>
+      </div>
+      <div class="col-12 text_ellips_no_height">
+        Mdef:
+        <span class="font-semibold px-1 summary_stat_def">{{ totalSummary?.calc?.softMdef || 0 }} + {{ totalSummary?.calc?.mdef || 0 }}</span>
+        MRes:
+        <span class="font-semibold px-1 summary_stat_def2">{{ totalSummary?.calc?.mres || 0 }}</span>
+      </div>
+      <div class="col-12 text_ellips_no_height">
+        Flee:
+        <span class="font-semibold px-1 summary_stat_def">{{ totalSummary?.calc?.totalFlee || 0 }} + {{ totalSummary?.calc?.totalPerfectDodge || 0 }}</span>
+        HitPhysical:
+        <span class="font-semibold px-1 summary_stat_atk">{{ totalSummary?.hitDmg || 0 }} %</span>
+      </div>
     </div>
   </div>
-
-  <!-- Magical Stats -->
-  <div class="col-12 border-bottom-dashed py-1">
-    <div class="grid grid-nogutter">
-      <div class="col-12 mb-1">
-        <span class="label">Matk:</span>
-        <span class="value summary_stat_matk font-bold ml-1">
-          {{ totalSummary?.calc?.totalStatusMatk || 0 }} +
+  <div class="col-6">
+    <div class="grid grid-nogutter mx-1">
+      <div class="col-12 text_ellips_no_height">
+        Alt+Q Matk:
+        <span class="font-semibold px-1 summary_stat_matk"
+          >{{ totalSummary?.calc?.totalStatusMatk || 0 }} +
           {{
             (totalSummary?.weapon?.baseWeaponMatk || 0) +
               (totalSummary?.weapon?.refineBonus || 0) +
               (totalSummary?.calc?.leftWeaponRefineBonus || 0) +
               (totalSummary?.matk || 0)
-          }}
-        </span>
+          }}</span
+        >
       </div>
-      <div class="col-6"><span class="label">S.Matk:</span> <span class="value summary_stat_matk2">{{ totalSummary?.dmg?.sMatk || 0 }}</span></div>
-      <div class="col-6"><span class="label">D2I1:</span> <span class="value summary_stat_yellow">{{ totalSummary?.calc?.dex2int1 || 0 }}</span></div>
-      <div class="col-12 text-xs">
-        <span class="label">CD:</span> <span class="value mr-2">{{ totalSummary?.acd || 0 }}</span>
-        <span class="label">FCT:</span> <span class="value mr-2">{{ totalSummary?.fct || 0 }}</span>
-        <span class="label">VCT:</span> <span class="value">{{ totalSummary?.vct || 0 }}</span>
+      <div class="col-12 text_ellips_no_height">
+        Matk
+        <span class="font-semibold px-1 summary_stat_matk">{{ totalSummary?.matkPercent || 0 }} %</span>
+        S.Matk:
+        <span class="font-semibold px-1 summary_stat_matk2">{{ totalSummary?.dmg?.sMatk || 0 }}</span>
       </div>
-    </div>
-  </div>
-
-  <!-- Defensive Stats -->
-  <div class="col-12 py-1">
-    <div class="grid grid-nogutter text-xs">
-      <div class="col-6"><span class="label">Def:</span> <span class="value summary_stat_def">{{ totalSummary?.calc?.softDef || 0 }}+{{ totalSummary?.calc?.def || 0 }}</span></div>
-      <div class="col-6"><span class="label">Res:</span> <span class="value summary_stat_def2">{{ totalSummary?.calc?.res || 0 }}</span></div>
-      <div class="col-6"><span class="label">Mdef:</span> <span class="value summary_stat_def">{{ totalSummary?.calc?.softMdef || 0 }}+{{ totalSummary?.calc?.mdef || 0 }}</span></div>
-      <div class="col-6"><span class="label">MRes:</span> <span class="value summary_stat_def2">{{ totalSummary?.calc?.mres || 0 }}</span></div>
-      <div class="col-12"><span class="label">HP:</span> <span class="value summary_stat_yellow font-bold">{{ totalSummary?.calc?.maxHp || 0 | number }}</span> <span class="label ml-2">SP:</span> <span class="value summary_stat_yellow font-bold">{{ totalSummary?.calc?.maxSp || 0 | number }}</span></div>
+      <div class="col-12 text_ellips_no_height">
+        After Cast Delay:
+        <span class="font-semibold px-1 summary_stat_matk">{{ totalSummary?.acd || 0 }}</span>
+      </div>
+      <div class="col-12 text_ellips_no_height">
+        Fixed Cast Time:
+        <span class="font-semibold px-1 summary_stat_matk">{{ totalSummary?.fct || 0 }}</span>
+      </div>
+      <div class="col-12 text_ellips_no_height">
+        Variable Cast Time:
+        <span class="font-semibold px-1 summary_stat_matk">{{ totalSummary?.vct || 0 }}</span>
+      </div>
+      <div class="col-12 text_ellips_no_height">
+        Dex2 Int1:
+        <span class="font-semibold px-1 summary_stat_yellow">{{ totalSummary?.calc?.dex2int1 || 0 }}</span>
+        <span [hidden]="totalSummary?.calc?.to530 <= 0">{{ '( อีก ' + totalSummary?.calc?.to530 + ' )' }}</span>
+      </div>
+      <div class="col-12 px-1 border_default hp-sp-section" [hidden]="hideHpSp">
+        <div class="grid grid-nogutter">
+          <div class="col-12 flex gap-1">
+            HP:
+            <span class="font-semibold px-1 summary_stat_yellow">{{ totalSummary?.calc?.maxHp || 0 | number }}</span>
+          </div>
+          <div class="col-12 flex gap-1">
+            SP:
+            <span class="font-semibold px-1 summary_stat_yellow">{{ totalSummary?.calc?.maxSp || 0 | number }}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

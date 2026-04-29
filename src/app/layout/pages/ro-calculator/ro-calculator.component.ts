@@ -234,6 +234,7 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
   private calculator = new Calculator();
   private calculator2 = new Calculator();
   private stateCalculator = new BaseStateCalculator();
+  private worker: Worker;
 
   possiblyDamages: DropdownModel[];
   itemSummary: any;
@@ -317,6 +318,13 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initLoadItemsBtn();
     this.initCalcTableColumns();
+
+    if (typeof Worker !== 'undefined') {
+      this.worker = new Worker(new URL('./calculator.worker', import.meta.url), { type: 'module' });
+    } else {
+      console.warn('Web Workers are not supported in this environment.');
+    }
+
     this.initData()
       .pipe(
         switchMap(() => this.loadItemSet(localStorage.getItem('ro-set'))),
@@ -433,9 +441,10 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
         debounceTime(250),
       )
       .subscribe(() => {
-        this.calculateToSelectedMonsters(false);
-        this.setCacheMonsterIdsForCalc();
-        this.isCalculatingEvent.next(false);
+        this.calculateToSelectedMonstersAsync(false).then(() => {
+          this.setCacheMonsterIdsForCalc();
+          this.isCalculatingEvent.next(false);
+        });
       });
     this.allSubs.push(updateMonsterListSubs);
 
@@ -508,7 +517,7 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
         tap(() => {
           this.calculator.setSelectedChances(this.selectedChances).recalcExtraBonus(this.model.selectedAtkSkill);
           this.totalSummary = this.calculator.getTotalSummary();
-          this.calculateToSelectedMonsters();
+          this.calculateToSelectedMonstersAsync();
         }),
         debounceTime(100),
       )
@@ -600,6 +609,16 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
             }),
         );
         this.enchants = ens;
+
+        if (this.worker) {
+          this.worker.postMessage({
+            type: 'INIT',
+            payload: {
+              items,
+              hpSpTable
+            }
+          });
+        }
 
         if (!this.env.production) {
           const enchants = EnchantTable.flatMap((a) => a.enchants)
@@ -847,7 +866,7 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
     }, {});
     // this.possiblyDamages = calc.getPossiblyDamages().map((a) => ({ label: `${a}`, value: a }));
 
-    this.calculateToSelectedMonsters();
+    this.calculateToSelectedMonstersAsync();
   }
 
   private calcCompare() {
@@ -1066,6 +1085,91 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
 
     // reset to main selected monster
     this.calculator.setMonster(this.monsterDataMap[this.selectedMonster]).prepareAllItemBonus().calcAllAtk();
+  }
+
+  calculateToSelectedMonstersAsync(needCalcAll = true): Promise<any> {
+    const selectedMonsterIds = this.selectedMonsterIds || [];
+
+    if (!needCalcAll) {
+      const alreadyCalc = new Set(this.calcDamages.map((a) => a.id));
+      const noCalcs = selectedMonsterIds.filter((id) => !alreadyCalc.has(id));
+      if (noCalcs.length === 0) {
+        this.calcDamages = this.calcDamages.filter((a) => selectedMonsterIds.includes(a.id));
+        return Promise.resolve(true);
+      }
+    }
+
+    if (!this.worker) {
+      this.calculateToSelectedMonsters(needCalcAll);
+      return Promise.resolve(true);
+    }
+
+    const { activeSkills, passiveSkills, selectedAtkSkill } = this.model;
+    const { equipAtks, masteryAtks, activeSkillNames, learnedSkillMap } = this.selectedCharacter
+      .setLearnSkills({
+        activeSkillIds: activeSkills,
+        passiveSkillIds: passiveSkills,
+      })
+      .getSkillBonusAndName();
+
+    const { consumables, consumables2, aspdPotion, aspdPotions } = this.model;
+    const usedSupBattlePill = consumables.includes(12792);
+    const isUseHpL = consumables.includes(12424);
+    const consumeData = [...consumables, ...consumables2, ...aspdPotions]
+      .filter(Boolean)
+      .filter((id) => !usedSupBattlePill || (usedSupBattlePill && id !== 12791))
+      .map((id) => this.items[id].script);
+
+    const buffEquips = {};
+    const buffMasterys = {};
+    this.skillBuffs.forEach((skillBuff, i) => {
+      const buffVal = this.model.skillBuffs[i];
+      const buff = skillBuff.dropdown.find((a) => a.value === buffVal);
+      if (buff?.isUse && !activeSkillNames.has(skillBuff.name)) {
+        if (skillBuff.isMasteryAtk) {
+          buffMasterys[skillBuff.name] = buff.bonus;
+        } else {
+          buffEquips[skillBuff.name] = buff.bonus;
+        }
+      }
+    });
+
+    const payload = {
+      model: this.model,
+      selectedChanceList: this.selectedChances,
+      equipAtks,
+      masteryAtks,
+      activeSkillNames: Array.from(activeSkillNames),
+      learnedSkillMap: Array.from(learnedSkillMap.entries()),
+      consumeData,
+      buffMasterys,
+      buffEquips,
+      aspdPotion,
+      extraOptions: this.getOptionScripts(this.model.rawOptionTxts),
+      selectedAtkSkill,
+      isUseHpL,
+      selectedMonsterIds,
+      monsters: selectedMonsterIds.reduce((acc, id) => {
+        acc[id] = this.monsterDataMap[id];
+        return acc;
+      }, {})
+    };
+
+    return new Promise((resolve, reject) => {
+      const listener = ({ data }: any) => {
+        if (data.type === 'CALCULATE_MONSTERS_DONE') {
+          this.worker.removeEventListener('message', listener);
+          this.calcDamages = data.payload.calcDamages;
+          resolve(true);
+        } else if (data.type === 'CALCULATE_ERROR') {
+          this.worker.removeEventListener('message', listener);
+          console.error(data.error);
+          reject(data.error);
+        }
+      };
+      this.worker.addEventListener('message', listener);
+      this.worker.postMessage({ type: 'CALCULATE_MONSTERS', payload });
+    });
   }
 
   private resetModel() {

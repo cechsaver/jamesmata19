@@ -3,7 +3,7 @@ name: Deploy Angular to GitHub Pages
 on:
   push:
     branches:
-      - main # ตรวจสอบว่า branch หลักของคุณชื่อ main หรือ master นะครับ
+      - main
 
 permissions:
   contents: read
@@ -24,14 +24,18 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          # เปลี่ยนเป็น Node 22 (LTS ล่าสุด) เพื่อเลี่ยงคำเตือน deprecation
+          node-version: '22'
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm install # ใช้ install เพื่อความชัวร์ในกรณีที่ไม่มีไฟล์ lock
+        # เปลี่ยนจาก npm ci เป็น npm install เพื่อลดปัญหาเรื่องไฟล์ lock ไม่ตรงกัน
+        run: npm install
 
       - name: Build Angular Project
-        # แก้ไข base-href ให้ตรงกับชื่อ repo jamesmata19
+        # เพิ่มหน่วยความจำให้ Node กรณีโปรเจกต์ใหญ่ (Optional)
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: npx ng build --configuration production --base-href /jamesmata19/
 
       - name: Copy index.html to 404.html

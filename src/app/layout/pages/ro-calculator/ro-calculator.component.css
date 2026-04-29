@@ -532,3 +532,51 @@
 .lv200 {
   color: var(--yellow-200);
 }
+
+/* Summary Sidebar Styles */
+.summary-container {
+  font-size: 0.82rem;
+  color: var(--text-main);
+  padding: 0.25rem;
+}
+
+.summary-container .label {
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.summary-container .value {
+  margin-left: 0.15rem;
+}
+
+.border-bottom-dashed {
+  border-bottom: 1px dashed var(--glass-border);
+  margin-bottom: 0.35rem;
+}
+
+.mb-1 { margin-bottom: 0.25rem; }
+.mt-1 { margin-top: 0.25rem; }
+.pb-1 { padding-bottom: 0.25rem; }
+.py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
+
+/* Sticky summary adjustment */
+.sticky-summary .glass-panel {
+  max-height: calc(100vh - 1rem);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure header is neat */
+.item_label_weapon_main {
+  align-items: center;
+}
+
+.p-inputgroup-addon {
+  justify-content: flex-start;
+}
+
+.json_display {
+  font-size: 11px;
+}

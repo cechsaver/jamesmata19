@@ -38,7 +38,7 @@ body {
 /* Dashboard Layout Utilities */
 .dashboard-container {
   display: grid;
-  grid-template-columns: 1fr 340px; /* Slimmer summary */
+  grid-template-columns: 1fr 400px; /* Wider summary for better balance */
   gap: var(--panel-gap);
   padding: 0.5rem; /* Reduced padding */
   max-width: 100%;

@@ -25,10 +25,10 @@
 <div class="dashboard-container">
   <!-- Left Side (Main Content) -->
   <div class="compact-grid">
-    <!-- Class Info (Full Width Dashboard Header) -->
-    <div class="glass-panel" style="grid-column: 1 / -1;">
+    <!-- Class Info (Dashboard Header) -->
+    <div class="glass-panel">
       <div class="grid">
-      <div class="col-4">
+      <div class="col-6">
         <div class="grid grid-nogutter">
           <div class="col-12">
             <div class="p-inputgroup">
@@ -178,47 +178,15 @@
       </div>
 
       <!-- Status -->
-      <div class="col-8">
-        <div class="grid grid-nogutter">
-          <div class="col-5">
-            <app-status-panel
-              [model]="model"
-              [totalSummary]="totalSummary"
-              [mainStatusList]="mainStatusList"
-              [traitStatusList]="traitStatusList"
-              [isAllowTraitStat]="isAllowTraitStat"
-              (statusChange)="onBaseStatusChange()">
-            </app-status-panel>
-          </div>
-
-          <!-- Summary -->
-          <div class="col-7">
-            <div class="grid grid-nogutter" style="position: relative">
-            <app-calculator-summary
-              [totalSummary]="totalSummary"
-              [isCalculating]="isCalculating"
-              [isProduction]="env.production"
-              [hideHpSp]="hideHpSp[selectedCharacter?.className]">
-            </app-calculator-summary>
-              <div class="col-12 item_label_compare">
-                <p-multiSelect
-                  [options]="compareItemList"
-                  [(ngModel)]="compareItemNames"
-                  [showClear]="true"
-                  [showHeader]="false"
-                  [showToggleAll]="false"
-                  scrollHeight="400px"
-                  selectedItemsLabel="{0} slot selected"
-                  placeholder="Enable item slot to compare"
-                  [maxSelectedLabels]="6"
-                  (onChange)="onListItemComparingChange()"
-                  (onClear)="onListItemComparingChange(true)"
-                  [appendTo]="'body'"
-                ></p-multiSelect>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="col-6">
+        <app-status-panel
+          [model]="model"
+          [totalSummary]="totalSummary"
+          [mainStatusList]="mainStatusList"
+          [traitStatusList]="traitStatusList"
+          [isAllowTraitStat]="isAllowTraitStat"
+          (statusChange)="onBaseStatusChange()">
+        </app-status-panel>
       </div>
     </div> <!-- End Header Glass Panel -->
     
@@ -1333,7 +1301,32 @@
 
   <!-- Right Side (Sticky Results) -->
   <div class="p-fluid sticky-summary">
-    <div class="glass-panel" style="height: calc(100vh - 3rem); overflow-y: auto;">
+    <div class="glass-panel mb-2">
+      <app-calculator-summary
+        [totalSummary]="totalSummary"
+        [isCalculating]="isCalculating"
+        [isProduction]="env.production"
+        [hideHpSp]="hideHpSp[selectedCharacter?.className]">
+      </app-calculator-summary>
+      <div class="col-12 item_label_compare mt-1 p-0">
+        <p-multiSelect
+          [options]="compareItemList"
+          [(ngModel)]="compareItemNames"
+          [showClear]="true"
+          [showHeader]="false"
+          [showToggleAll]="false"
+          scrollHeight="400px"
+          selectedItemsLabel="{0} slot selected"
+          placeholder="Compare mode: select slots"
+          [maxSelectedLabels]="6"
+          (onChange)="onListItemComparingChange()"
+          (onClear)="onListItemComparingChange(true)"
+          [appendTo]="'body'"
+        ></p-multiSelect>
+      </div>
+    </div>
+
+    <div class="glass-panel" style="height: calc(100vh - 15rem); overflow-y: auto;">
       <p-accordion [multiple]="true" [activeIndex]="[2, 7]">
       <p-accordionTab header="Consumables" class="consumable">
         <div class="grid grid-nogutter">

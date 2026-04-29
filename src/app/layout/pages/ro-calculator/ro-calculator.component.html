@@ -22,11 +22,11 @@
   <app-elemental-table [monsterMap]="monsterDataMap" [groupMonsterList]="groupMonsterList" [allSelectedMonsterIds]="allSelectedMonsterIds"></app-elemental-table>
 </p-dialog>
 
-<div class="grid p-4" style="min-width: 1500px; gap: 1.5rem;">
-  <!-- Left Side -->
-  <div class="p-fluid col-7">
-    <!-- Create Update Class -->
-    <div class="glass-panel">
+<div class="dashboard-container">
+  <!-- Left Side (Main Content) -->
+  <div class="compact-grid">
+    <!-- Class Info (Full Width Dashboard Header) -->
+    <div class="glass-panel" style="grid-column: 1 / -1;">
       <div class="grid">
       <div class="col-4">
         <div class="grid grid-nogutter">
@@ -215,8 +215,7 @@
           </div>
         </div>
       </div>
-    </div>
-    </div>
+    </div> <!-- End Header Glass Panel -->
     
     <!-- Weapon + Ammo -->
     <div class="glass-panel">
@@ -1321,14 +1320,11 @@
             (selectItemChange)="onCompareItemChange()"
             (optionChange)="onCompareItemChange()"
           ></app-equipment-shadow>
-        </div>
-      </div>
-    </div>
-    </div>
-  </div>
+    </div> <!-- End Shadow -->
+  </div> <!-- End Left Side (compact-grid) -->
 
-  <!-- Right Side -->
-  <div class="p-fluid col-5">
+  <!-- Right Side (Sticky Results) -->
+  <div class="p-fluid sticky-summary">
     <div class="glass-panel" style="height: calc(100vh - 3rem); overflow-y: auto;">
       <p-accordion [multiple]="true" [activeIndex]="[2, 7]">
       <p-accordionTab header="Consumables" class="consumable">

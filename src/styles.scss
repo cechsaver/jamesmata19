@@ -11,99 +11,115 @@ $gutter: 1rem; //for primeflex grid system
 :root {
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
   
-  /* Midnight Minimal Palette */
-  --bg-deep: #020617;
-  --bg-surface: #0f172a;
-  --primary: #22d3ee; /* Soft Cyan */
-  --primary-glow: rgba(34, 211, 238, 0.3);
+  /* Emerald Charcoal Palette (Comfortable Dark) */
+  --bg-deep: #0a0c10;
+  --bg-surface: #161b22;
+  --bg-card: rgba(22, 27, 34, 0.7);
+  --primary: #2dd4bf; /* Mint Emerald */
+  --primary-glow: rgba(45, 212, 191, 0.2);
+  --accent: #818cf8; /* Soft Indigo for secondary actions */
+  --text-main: #e6edf3;
+  --text-muted: #8b949e;
   
-  /* Refined Glass Effects */
-  --glass-bg: rgba(15, 23, 42, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.05);
-  --glass-blur: blur(16px);
-  --glass-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.5);
-  
-  --surface-gradient: radial-gradient(circle at top left, #1e293b 0%, #020617 100%);
-}
-
-* {
-  font-family: var(--font-family);
-  box-sizing: border-box;
+  /* Compact Design Tokens */
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: blur(12px);
+  --panel-gap: 0.75rem;
 }
 
 body {
   background: var(--bg-deep);
-  background-image: var(--surface-gradient);
-  background-attachment: fixed;
-  color: #e2e8f0;
-  -webkit-font-smoothing: antialiased;
-  margin: 0;
+  background-image: radial-gradient(circle at 50% -20%, #1c2128 0%, #0a0c10 100%);
+  color: var(--text-main);
+  font-size: 14px; /* Smaller base font for compactness */
+  overflow-x: hidden;
+}
+
+/* Dashboard Layout Utilities */
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 1fr 380px; /* Fixed width for summary */
+  gap: var(--panel-gap);
+  padding: 1rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.sticky-summary {
+  position: sticky;
+  top: 1rem;
+  height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+
+.compact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--panel-gap);
 }
 
 .glass-panel {
-  background: var(--glass-bg);
+  background: var(--bg-card);
   backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  box-shadow: var(--glass-shadow);
-  padding: 1.5rem;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  
-  &:hover {
-    border-color: rgba(255, 255, 255, 0.1);
-  }
+  border-radius: 12px;
+  padding: 1rem; /* Reduced padding */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-/* Minimal PrimeNG Overrides */
-.p-dropdown, .p-inputtext, .p-multiselect, .p-splitbutton, .p-button {
-  border-radius: 10px !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  background: rgba(255, 255, 255, 0.03) !important;
+/* Refined PrimeNG for Emerald Theme */
+.p-dropdown, .p-inputtext, .p-multiselect {
+  font-size: 0.9rem !important;
+  background: rgba(0, 0, 0, 0.2) !important;
+  border-color: var(--glass-border) !important;
+  padding: 0.4rem 0.6rem !important;
 }
 
-.p-dropdown:not(.p-disabled).p-focus, .p-inputtext:enabled:focus {
-  box-shadow: 0 0 0 1px var(--primary-glow) !important;
+.p-dropdown:not(.p-disabled).p-focus {
   border-color: var(--primary) !important;
+  box-shadow: 0 0 0 1px var(--primary-glow) !important;
 }
 
-.p-button {
+.p-button.p-button-success {
+  background: var(--primary) !important;
+  color: #000 !important;
+  font-weight: 700 !important;
   border: none !important;
-  transition: all 0.2s ease;
-  
-  &.p-button-success {
-    background: var(--primary) !important;
-    color: var(--bg-deep) !important;
-    &:hover { background: #67e8f9 !important; }
+}
+
+.p-accordion .p-accordion-header .p-accordion-header-link {
+  background: transparent !important;
+  border: none !important;
+  color: var(--primary) !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 0 !important;
+}
+
+/* Responsive Overrides */
+@media screen and (max-width: 1200px) {
+  .dashboard-container {
+    grid-template-columns: 1fr;
   }
-  
-  &.p-button-warning {
-    background: #f59e0b !important;
-    color: #fff !important;
+  .sticky-summary {
+    position: static;
+    height: auto;
   }
 }
 
-/* Clean Property Tags */
+@media screen and (max-width: 768px) {
+  .compact-grid {
+    grid-template-columns: 1fr;
+  }
+  .glass-panel {
+    padding: 0.75rem;
+  }
+}
+
+/* Property Tag Improvements */
 [class^="property_"] {
-  border-radius: 6px;
-  padding: 1px 8px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
 }
-
-.property_Water { background: #3b82f6 !important; color: #fff !important; }
-.property_Earth { background: #92400e !important; color: #fff !important; }
-.property_Fire { background: #ef4444 !important; color: #fff !important; }
-.property_Wind { background: #10b981 !important; color: #fff !important; }
-.property_Poison { background: #a855f7 !important; color: #fff !important; }
-.property_Holy { background: #eab308 !important; color: #000 !important; }
-.property_Dark { background: #6366f1 !important; color: #fff !important; }
-.property_Ghost { background: #94a3b8 !important; color: #fff !important; }
-.property_Undead { background: #1e293b !important; color: #fff !important; }
-
-/* Scrollbar refinement */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 10px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }

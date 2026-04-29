@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, computed, WritableSignal, effect } from '@angular/core';
 import { ConfirmationService, MenuItem, MessageService, PrimeIcons, SelectItemGroup } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject, Subscription, catchError, debounceTime, finalize, forkJoin, mergeMap, of, switchMap, take, tap, throwError } from 'rxjs';
@@ -99,6 +99,16 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
   updateCompareEvent = new Subject();
   updateChanceEvent = new Subject();
   isCalculatingEvent = new Subject();
+
+  // Signals for Phase 3
+  totalSummarySignal = signal<any>({});
+  totalSummary2Signal = signal<any>({});
+  calcDamagesSignal = signal<any[]>([]);
+  chanceListSignal = signal<ChanceModel[]>([]);
+  isCalculatingSignal = signal<boolean>(false);
+  
+  private worker: Worker;
+  private isWorkerReady = false;
 
   loadBtnItems: MenuItem[];
   monsterDataMap: Record<number, MonsterModel> = {};
@@ -410,8 +420,7 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
         if (itemChanges.has(ItemTypeEnum.weapon)) {
           this.setAmmoDropdownList();
         }
-        this.calculate();
-        this.calcCompare();
+        this.calculateAsync();
         this.saveCurrentStateItemset();
         this.resetItemDescription();
         this.onSelectItemDescription(Boolean(this.selectedCompareItemDesc));
@@ -594,6 +603,10 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
 
         this.calculator.setMasterItems(items).setHpSpTable(hpSpTable);
         this.calculator2.setMasterItems(items).setHpSpTable(hpSpTable);
+
+        if (this.worker) {
+          this.worker.postMessage({ type: 'INIT', payload: { items, hpSpTable } });
+        }
 
         const ens = [] as DropdownModel[];
         this.mapEnchant = new Map(
@@ -840,6 +853,63 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
       .calculateAllDamages(selectedAtkSkill);
 
     return calc;
+  }
+
+  private calculateAsync() {
+    if (!this.isWorkerReady || !this.worker) {
+      this.calculate();
+      this.calcCompare();
+      return;
+    }
+
+    this.isCalculatingSignal.set(true);
+    this.isCalculating = true;
+
+    const { activeSkills, passiveSkills, selectedAtkSkill } = this.model;
+    const { equipAtks, masteryAtks, activeSkillNames, learnedSkillMap } = this.selectedCharacter
+      .setLearnSkills({ activeSkillIds: activeSkills, passiveSkillIds: passiveSkills })
+      .getSkillBonusAndName();
+
+    const { consumables, consumables2, aspdPotion, aspdPotions } = this.model;
+    const usedSupBattlePill = consumables.includes(12792);
+    const usedHpL = consumables.includes(12424);
+    const consumeData = [...consumables, ...consumables2, ...aspdPotions]
+      .filter(Boolean)
+      .filter((id) => !usedSupBattlePill || (usedSupBattlePill && id !== 12791))
+      .map((id) => this.items[id].script);
+
+    const buffEquips = {};
+    const buffMasterys = {};
+    this.skillBuffs.forEach((skillBuff, i) => {
+      const buffVal = this.model.skillBuffs[i];
+      const buff = skillBuff.dropdown.find((a) => a.value === buffVal);
+      if (buff?.isUse && !activeSkillNames.has(skillBuff.name)) {
+        if (skillBuff.isMasteryAtk) buffMasterys[skillBuff.name] = buff.bonus;
+        else buffEquips[skillBuff.name] = buff.bonus;
+      }
+    });
+
+    const payload = {
+      model: this.model,
+      compareModel: this.isEnableCompare ? this.model2 : null,
+      selectedChanceList: this.selectedChances,
+      equipAtks,
+      masteryAtks,
+      activeSkillNames: Array.from(activeSkillNames),
+      learnedSkillMap: Array.from(learnedSkillMap.entries()),
+      consumeData,
+      buffMasterys,
+      buffEquips,
+      monster: this.monsterDataMap[this.selectedMonster],
+      aspdPotion,
+      extraOptions: this.getOptionScripts(this.model.rawOptionTxts),
+      selectedAtkSkill,
+      usedHpL,
+      calcCompare: this.isEnableCompare
+    };
+
+    this.worker.postMessage({ type: 'CALCULATE', payload });
+    this.calculateToSelectedMonstersAsync();
   }
 
   private calculate() {
@@ -1099,7 +1169,7 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (!this.worker) {
+    if (!this.worker || !this.isWorkerReady) {
       this.calculateToSelectedMonsters(needCalcAll);
       return Promise.resolve(true);
     }
@@ -1155,21 +1225,10 @@ export class RoCalculatorComponent implements OnInit, OnDestroy {
       }, {})
     };
 
-    return new Promise((resolve, reject) => {
-      const listener = ({ data }: any) => {
-        if (data.type === 'CALCULATE_MONSTERS_DONE') {
-          this.worker.removeEventListener('message', listener);
-          this.calcDamages = data.payload.calcDamages;
-          resolve(true);
-        } else if (data.type === 'CALCULATE_ERROR') {
-          this.worker.removeEventListener('message', listener);
-          console.error(data.error);
-          reject(data.error);
-        }
-      };
-      this.worker.addEventListener('message', listener);
-      this.worker.postMessage({ type: 'CALCULATE_MONSTERS', payload });
-    });
+    this.isCalculatingSignal.set(true);
+    this.isCalculating = true;
+    this.worker.postMessage({ type: 'CALCULATE_MONSTERS', payload });
+    return Promise.resolve(true);
   }
 
   private resetModel() {
